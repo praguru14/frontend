@@ -1,8 +1,5 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { CricketData } from '../cricket-data.model';
-import { SourceTextModule } from 'vm';
-import { log } from 'console';
 
 @Component({
   selector: 'app-cricbuzz',
@@ -11,18 +8,35 @@ import { log } from 'console';
 })
 export class CricbuzzComponent {
 
-  constructor(private http:HttpClient){}
-  url: string = ''; 
-  baseUrl: string ='http://localhost:9012/live'
+  constructor(private http: HttpClient) { }
+
+  url: string = '';
+  baseUrl: string = 'http://localhost:9012/cricket/live';
+  responseData: any;
+  errorMessage: string = '';
+  isLoading: boolean = false;
 
   submitURL() {
-  
-    console.log("Submitted URL:", this.url);
-    this.url=''
+    this.errorMessage = '';
+    this.isLoading = true;
 
-    this.http.post<any>(this.baseUrl,this.url).subscribe(res=>{
-      console.log(res)
-    })
-   
+    const urlWithParams = `${this.baseUrl}?id=${this.url}`;
+
+    this.http.get<any>(urlWithParams).subscribe(
+      (res) => {
+        console.log("Response:", res);
+        this.responseData = res;
+      },
+      (error) => {
+        console.error(error);
+        this.errorMessage = 'Error occurred while fetching data.';
+      }
+    ).add(() => {
+      this.isLoading = false;
+    });
+  }
+
+  clearInput() {
+    this.url = '';
   }
 }
