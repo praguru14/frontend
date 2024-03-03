@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { CricketData } from '../cricket-data.model';
 
 @Component({
   selector: 'app-cricbuzz',
@@ -12,7 +13,7 @@ export class CricbuzzComponent {
 
   url: string = '';
   baseUrl: string = 'http://localhost:9012/cricket/live';
-  responseData: any;
+  responseData!: CricketData;
   errorMessage: string = '';
   isLoading: boolean = false;
 
