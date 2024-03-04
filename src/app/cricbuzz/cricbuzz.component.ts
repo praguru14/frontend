@@ -12,7 +12,7 @@ export class CricbuzzComponent {
   constructor(private http: HttpClient) { }
 
   url: string = '';
-  baseUrl: string = 'http://localhost:9012/cricket/live';
+  baseUrl: string = 'https://app-03md.onrender.com/cricket/live';
   responseData!: CricketData;
   errorMessage: string = '';
   isLoading: boolean = false;
